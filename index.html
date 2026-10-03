@@ -203,7 +203,8 @@ input, select, button { font-family: inherit; }
   cursor:pointer; transition:all 0.2s; text-align:left;
   -webkit-tap-highlight-color:transparent;
 }
-.funnel-option:active, .funnel-option:hover { border-color:var(--coral); }
+@media (hover:hover) { .funnel-option:hover { border-color:var(--coral); } }
+.funnel-option:active { border-color:var(--coral); }
 .funnel-option.selected { border-color:var(--coral); background:#FDE8E0; color:var(--muted-red); }
 .funnel-chips { display:flex; gap:6px; flex-wrap:wrap; }
 .funnel-chip {
