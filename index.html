@@ -971,6 +971,11 @@ function calcInDetail(orgId) {
         <div class="result-row"><span class="result-row-label">월 실질 부담</span><span class="result-row-value" style="color:var(--sand);">약 ${fmtWon(Math.round(realCost/12))}/월</span></div>
       </div>
     </div>`;
+  // 결과 추가 후 wrap maxHeight 갱신
+  const wrap = document.getElementById('calcDetailWrap');
+  if (wrap && wrap.style.maxHeight && wrap.style.maxHeight !== '0px') {
+    wrap.style.maxHeight = wrap.scrollHeight + 'px';
+  }
 }
 
 function toggleCalcDetail() {
