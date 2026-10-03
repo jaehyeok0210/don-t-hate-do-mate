@@ -2625,9 +2625,9 @@ const DATA = {
             "모금비용": 44808267
           },
           "expense_breakdown_ui": {
-            "project": 8608,
-            "admin": 1147,
-            "fundraising": 245
+            "사업비": 8608,
+            "운영비": 1147,
+            "모금비": 245
           },
           "expense_breakdown_detail": {
             "사업수행비용": {
@@ -2664,9 +2664,9 @@ const DATA = {
             "모금비용": 43005107
           },
           "expense_breakdown_ui": {
-            "project": 8798,
-            "admin": 951,
-            "fundraising": 251
+            "사업비": 8798,
+            "운영비": 951,
+            "모금비": 251
           }
         },
         "2023": {
@@ -2686,9 +2686,9 @@ const DATA = {
             "모금비용": 19383838
           },
           "expense_breakdown_ui": {
-            "project": 8926,
-            "admin": 983,
-            "fundraising": 91
+            "사업비": 8926,
+            "운영비": 983,
+            "모금비": 91
           }
         }
       },
