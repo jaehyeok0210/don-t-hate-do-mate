@@ -1446,11 +1446,13 @@ function showCompare() {
 
     <div class="context-text" style="margin-top:10px;">동일 연도 홈택스 공시 재무제표 기준이에요. 단체마다 회계 분류 방식이 달라 단순 비교에 한계가 있어요.</div>
 
-    <div class="compare-actions">
-      <button class="btn-outline" onclick="goBack()">&#8592; 목록으로</button>
+    <div style="display:flex;gap:10px;margin-top:16px;padding-bottom:16px;">
+      <button class="btn-outline" style="flex:1;" onclick="goBack()">&#8592; 목록으로</button>
+      <button class="btn-outline" style="flex:1;color:var(--warm-gray);border-color:#E8E0D8;" onclick="clearAllSelections();goBack()">선택 초기화</button>
     </div>
   `;
 
+  document.getElementById('compareFabWrap').style.display = 'none';
   document.getElementById('screenCompare').innerHTML = html;
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.bottom-tab').forEach(t => t.classList.remove('active'));
