@@ -1858,7 +1858,7 @@ const DATA = {
       "recurring_min": null,
       "onetime_min": null,
       "onetime_available": null,
-      "donation_url": null,
+      "donation_url": "http://www.koreapsh.or.kr/",
       "programs": [
         {
           "name": "장학복지사업",
@@ -2561,7 +2561,7 @@ const DATA = {
       "recurring_min": 10000,
       "onetime_min": 10000,
       "onetime_available": true,
-      "donation_url": "",
+      "donation_url": "https://eastern.or.kr/",
       "programs": [
         {
           "name": "노인복지사업",
@@ -2695,7 +2695,7 @@ const DATA = {
       "recurring_min": 10000,
       "onetime_min": null,
       "onetime_available": true,
-      "donation_url": "",
+      "donation_url": "http://www.lovecoal.org/",
       "programs": [
         {
           "name": "전국연탄나눔",
@@ -2805,7 +2805,7 @@ const DATA = {
       "recurring_min": 10000,
       "onetime_min": null,
       "onetime_available": true,
-      "donation_url": "",
+      "donation_url": "https://kfpd.org/",
       "programs": [
         {
           "name": "장애인단체 프로그램 지원사업",
@@ -2894,7 +2894,7 @@ const DATA = {
       "recurring_min": 10000,
       "onetime_min": null,
       "onetime_available": true,
-      "donation_url": "",
+      "donation_url": "https://www.donor.or.kr/",
       "programs": [
         {
           "name": "장기기증 홍보사업",
@@ -3064,7 +3064,7 @@ const DATA = {
       "recurring_min": 10000,
       "onetime_min": 10000,
       "onetime_available": true,
-      "donation_url": "",
+      "donation_url": "https://www.obos.or.kr/",
       "programs": [
         {
           "name": "국제사업 (해외 긴급구호)",
