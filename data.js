@@ -1979,7 +1979,7 @@ const DATA = {
       "recurring_min": 30000,
       "onetime_min": 10000,
       "onetime_available": true,
-      "donation_url": "https://www.goodpeople.or.kr",
+      "donation_url": "https://www.gfound.org",
       "programs": [
         {
           "name": "국내취약계층지원",
