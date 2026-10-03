@@ -1152,7 +1152,36 @@ function showDetail(id) {
       <div class="context-text">같은 활동도 단체마다 분류 기준이 다를 수 있어 직접 비교에 한계가 있어요.</div>
     </div>
 
-    <!-- 2. 재무 안정성 -->
+    <!-- 2. 사업 구조 -->
+    <div class="d-section">
+      <div class="d-section-title">&#x1F3D7; 사업 구조</div>
+      ${programs.sort((a,b) => (b.cost_2025||0) - (a.cost_2025||0)).map((p, i) => {
+        const maxCost = programs.reduce((m,pp) => Math.max(m, pp.cost_2025||0), 0);
+        const pct = maxCost > 0 && p.cost_2025 ? (p.cost_2025 / latestFY.expense_total * 100) : 0;
+        const barW = maxCost > 0 && p.cost_2025 ? (p.cost_2025 / maxCost * 100) : 0;
+        return `
+        <div class="program-item">
+          <div class="program-header" onclick="toggleProgram(this)">
+            <span class="program-header-left">${p.name}</span>
+            <span class="program-cost">${p.cost_2025 ? fmtEok(p.cost_2025) : '-'}</span>
+            <span class="program-arrow">&#9654;</span>
+          </div>
+          <div class="program-bar-wrap">
+            <div class="program-bar-bg"><div class="program-bar-fg" style="width:${barW.toFixed(1)}%"></div></div>
+            <span class="program-pct">${pct.toFixed(1)}%</span>
+          </div>
+          <div class="program-body">
+            <div class="program-body-inner">
+              ${formatProgramContent(p.content)}
+              <div class="program-region">📍 ${p.region}</div>
+            </div>
+          </div>
+        </div>`;
+      }).join('')}
+      <div class="context-text">공익목적사업 세부현황 기준이에요. 비율은 총 비용 대비 해당 사업 지출 비중이에요.</div>
+    </div>
+
+    <!-- 3. 재무 안정성 -->
     <div class="d-section">
       <div class="d-section-title">&#x1F4C8; 재무 안정성</div>
       <div style="font-size:0.78rem;font-weight:600;color:var(--stone);margin-bottom:4px;">3개년 수입·비용 추이</div>
@@ -1197,7 +1226,7 @@ function showDetail(id) {
       <div class="context-text">유동비율은 1년 내 갚아야 할 부채 대비 현금화 가능한 자산의 비율이에요. 200% 이상이면 단기 재무 안정성이 양호해요.</div>
     </div>
 
-    <!-- 3. 투명성 -->
+    <!-- 4. 투명성 -->
     <div class="d-section">
       <div class="d-section-title">&#x1F50D; 투명성</div>
       <div style="font-size:0.78rem;font-weight:600;color:var(--stone);margin-bottom:8px;">3개년 감사의견</div>
@@ -1205,35 +1234,6 @@ function showDetail(id) {
         ${trendYears.map(y => `<div class="badge"><div class="badge-year">${y}</div><div class="badge-opinion good">적정</div></div>`).join('')}
       </div>
       <div class="context-text">외부 감사인의 의견으로, 재무제표의 신뢰성에 대한 독립적 평가예요.</div>
-    </div>
-
-    <!-- 4. 사업 구조 -->
-    <div class="d-section">
-      <div class="d-section-title">&#x1F3D7; 사업 구조</div>
-      ${programs.sort((a,b) => (b.cost_2025||0) - (a.cost_2025||0)).map((p, i) => {
-        const maxCost = programs.reduce((m,pp) => Math.max(m, pp.cost_2025||0), 0);
-        const pct = maxCost > 0 && p.cost_2025 ? (p.cost_2025 / latestFY.expense_total * 100) : 0;
-        const barW = maxCost > 0 && p.cost_2025 ? (p.cost_2025 / maxCost * 100) : 0;
-        return `
-        <div class="program-item">
-          <div class="program-header" onclick="toggleProgram(this)">
-            <span class="program-header-left">${p.name}</span>
-            <span class="program-cost">${p.cost_2025 ? fmtEok(p.cost_2025) : '-'}</span>
-            <span class="program-arrow">&#9654;</span>
-          </div>
-          <div class="program-bar-wrap">
-            <div class="program-bar-bg"><div class="program-bar-fg" style="width:${barW.toFixed(1)}%"></div></div>
-            <span class="program-pct">${pct.toFixed(1)}%</span>
-          </div>
-          <div class="program-body">
-            <div class="program-body-inner">
-              ${formatProgramContent(p.content)}
-              <div class="program-region">📍 ${p.region}</div>
-            </div>
-          </div>
-        </div>`;
-      }).join('')}
-      <div class="context-text">공익목적사업 세부현황 기준이에요. 비율은 총 비용 대비 해당 사업 지출 비중이에요.</div>
     </div>
 
     <!-- 5. disclaimer -->

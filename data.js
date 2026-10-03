@@ -258,7 +258,7 @@ const DATA = {
       "recurring_min": 40000,
       "onetime_min": null,
       "onetime_available": true,
-      "donation_url": "https://my.worldvision.or.kr/support/",
+      "donation_url": "https://www.worldvision.or.kr/",
       "programs": [
         {
           "name": "해외사업",
@@ -375,7 +375,7 @@ const DATA = {
       "recurring_min": 1000,
       "onetime_min": null,
       "onetime_available": true,
-      "donation_url": "https://www.goodneighbors.kr/support/support.gn",
+      "donation_url": "https://www.goodneighbors.kr/",
       "donation_type": "지정기부금_비종교",
       "programs": [
         {
@@ -514,7 +514,7 @@ const DATA = {
       "recurring_min": 1000,
       "onetime_min": null,
       "onetime_available": true,
-      "donation_url": "https://www.goodneighbors.kr/support/support.gn",
+      "donation_url": "https://www.goodneighbors.kr/",
       "donation_type": "지정기부금_비종교",
       "programs": [
         {
@@ -751,7 +751,7 @@ const DATA = {
       "recurring_min": 10000,
       "onetime_min": 10000,
       "onetime_available": true,
-      "donation_url": "https://www.redcross.or.kr/main/ad/pay/redCrossPayStep01.do",
+      "donation_url": "https://www.redcross.or.kr/",
       "programs": [
         {
           "name": "구호사업 등 일반회계사업",
@@ -868,7 +868,7 @@ const DATA = {
       "recurring_min": 10000,
       "onetime_min": 10000,
       "onetime_available": true,
-      "donation_url": "https://www.kbdca.or.kr/sub03_new/sub01.php",
+      "donation_url": "https://www.kbdca.or.kr/",
       "programs": [
         {
           "name": "치료비 지원",
@@ -979,7 +979,7 @@ const DATA = {
       "recurring_min": 30000,
       "onetime_min": 30000,
       "onetime_available": true,
-      "donation_url": "https://www.unicef.or.kr/involve/individual/pledge/",
+      "donation_url": "https://www.unicef.or.kr/",
       "programs": [
         {
           "name": "일반사업",
@@ -1099,7 +1099,7 @@ const DATA = {
       "recurring_min": 10000,
       "onetime_min": 10000,
       "onetime_available": true,
-      "donation_url": "https://www.miral.org/donate/regular.do",
+      "donation_url": "https://www.miral.org/",
       "programs": [
         {
           "name": "장애인복지사업",
@@ -1361,7 +1361,7 @@ const DATA = {
       "recurring_min": 20000,
       "onetime_min": 10000,
       "onetime_available": true,
-      "donation_url": "https://www.sc.or.kr/donate/monthly.do",
+      "donation_url": "https://www.sc.or.kr/",
       "programs": [
         {
           "name": "국내사업",
@@ -1493,7 +1493,7 @@ const DATA = {
       "recurring_min": 20000,
       "onetime_min": 30000,
       "onetime_available": true,
-      "donation_url": "https://www.compassion.or.kr/sponsor/children",
+      "donation_url": "https://www.compassion.or.kr/",
       "programs": [
         {
           "name": "1:1 어린이 양육사업",
@@ -1646,7 +1646,7 @@ const DATA = {
       "recurring_min": 30000,
       "onetime_min": 2000,
       "onetime_available": true,
-      "donation_url": "https://www.kfhi.or.kr/support",
+      "donation_url": "https://www.kfhi.or.kr/",
       "programs": [
         {
           "name": "해외지원(국제구호개발사업)",
@@ -1751,7 +1751,7 @@ const DATA = {
       "recurring_min": 10000,
       "onetime_min": 3000,
       "onetime_available": true,
-      "donation_url": "https://msf.or.kr/monthly/",
+      "donation_url": "https://msf.or.kr/",
       "programs": [
         {
           "name": "의료제공",
@@ -2489,7 +2489,7 @@ const DATA = {
       "recurring_min": 10000,
       "onetime_min": 10000,
       "onetime_available": true,
-      "donation_url": "https://donate.habitat.or.kr",
+      "donation_url": "https://www.habitat.or.kr/",
       "programs": [
         {
           "name": "주거제공 및 주거환경개선",
