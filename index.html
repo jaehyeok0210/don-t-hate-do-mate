@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Don't Hate, Do, Mate - 기부 가이드</title>
+<title>Don't Wait, Do, Mate - 기부 가이드</title>
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link href="https://cdn.jsdelivr.net/npm/pretendard@latest/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
 <style>
@@ -60,7 +60,7 @@ input, select, button { font-family: inherit; }
   margin-bottom: 16px; text-align: center; line-height: 1.4;
   color: var(--charcoal);
 }
-.home-brand .hate { color: var(--coral); }
+.home-brand .wait { color: var(--coral); }
 .home-brand .mate { color: var(--coral); }
 .home-tagline {
   font-size: 0.82rem; color: var(--stone); margin-bottom: 6px;
@@ -142,6 +142,13 @@ input, select, button { font-family: inherit; }
 }
 .org-checkbox.checked { background: var(--coral); border-color: var(--coral); }
 .org-checkbox.checked::after { content:''; width:6px; height:10px; border:solid #fff; border-width:0 2px 2px 0; transform:rotate(45deg); margin-top:-2px; }
+.compare-toggle-btn {
+  display:block; width:100%; padding:10px; margin-bottom:10px; border-radius:10px;
+  border:1.5px solid #E8E0D8; background:var(--white); color:var(--stone);
+  font-size:0.85rem; font-weight:600; cursor:pointer; transition:all 0.2s;
+  text-align:center;
+}
+.compare-toggle-btn.active { background:var(--coral); color:#fff; border-color:var(--coral); }
 .org-name-wrap { min-width:0; }
 .org-name { font-size:0.9rem; font-weight:700; line-height:1.3; }
 .org-type-badge {
@@ -212,6 +219,14 @@ input, select, button { font-family: inherit; }
 }
 .funnel-next:disabled { opacity:0.35; cursor:default; }
 .funnel-next:not(:disabled):active { opacity:0.85; }
+.funnel-nav { display:flex; gap:10px; margin-top:16px; }
+.funnel-prev {
+  flex:1; padding:14px; border-radius:10px;
+  border:1.5px solid #E8E0D8; background:var(--white); color:var(--stone);
+  font-size:0.9rem; font-weight:700; cursor:pointer; transition:opacity 0.2s;
+}
+.funnel-prev:active { opacity:0.85; }
+.funnel-nav .funnel-next { flex:2; margin-top:0; }
 .funnel-option.selected { border-color:var(--coral); background:#FDE8E0; color:var(--muted-red); }
 .funnel-results-header { margin-bottom:12px; }
 .funnel-results-header h2 { font-size:1rem; font-weight:700; margin-bottom:4px; }
@@ -408,9 +423,9 @@ input, select, button { font-family: inherit; }
     <!-- HOME -->
     <div class="screen active" id="screenHome">
       <div class="home-container">
-        <div class="home-brand">Don't <span class="hate">Hate</span>, Do, <span class="mate">Mate</span></div>
-        <div class="home-tagline">감정에 호소하는 캠페인 대신</div>
-        <div class="home-title">이성에 근거한<br><span>기부 가이드</span></div>
+        <div class="home-brand">Don't <span class="wait">Wait</span>, Do, <span class="mate">Mate</span></div>
+        <div class="home-tagline">따뜻한 마음을 가진 당신을 위한</div>
+        <div class="home-title">기부 <span>첫걸음</span></div>
         <div class="home-subtitle">홈택스 공시 데이터 기반으로<br>공익법인을 비교하고 추천받아요</div>
         <div class="home-buttons">
           <button class="home-btn home-btn-explore" onclick="switchTab('explore')">
@@ -437,6 +452,7 @@ input, select, button { font-family: inherit; }
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
         <input type="text" id="searchInput" placeholder="단체 이름을 검색해 보세요 (초성 검색 가능)">
       </div>
+      <button class="compare-toggle-btn" id="compareToggleBtn" onclick="toggleCompareMode()">☐ 비교하기</button>
       <div id="searchEmpty" class="search-empty" style="display:none;">
         <div class="search-empty-icon">🏛️</div>
         <div class="search-empty-title">27개 공익법인 검색</div>
@@ -578,6 +594,7 @@ function matchSearch(name, query) {
 // ===== STATE =====
 let currentTab = 'home';
 let selectedOrgs = new Set();
+let compareMode = false;
 let funnelState = { step: 1, regions: [], targets: [], causes: [], budget: null };
 
 // ===== TAB SWITCHING =====
@@ -645,7 +662,7 @@ function renderOrgList(filter = '') {
     <div class="org-card" id="card-${org.id}">
       <div class="org-header">
         <div class="org-header-left">
-          <div class="org-checkbox ${checked ? 'checked' : ''}" onclick="event.stopPropagation();toggleSelect('${org.id}')"></div>
+          ${compareMode ? `<div class="org-checkbox ${checked ? 'checked' : ''}" onclick="event.stopPropagation();toggleSelect('${org.id}')"></div>` : ''}
           <div class="org-name-wrap" onclick="showDetail('${org.id}')">
             <div class="org-name">${org.name}</div>
             <div class="org-type-badge">${getDonTypeBadge(org.donation_type)}</div>
@@ -689,11 +706,24 @@ function updateFab() {
 
 function clearAllSelections() {
   selectedOrgs.clear();
+  compareMode = false;
+  const btn = document.getElementById('compareToggleBtn');
+  if (btn) { btn.classList.remove('active'); btn.textContent = '☐ 비교하기'; }
   const input = document.getElementById('searchInput');
   if (input.value.trim()) {
     renderOrgList(input.value);
   }
   updateFab();
+}
+
+function toggleCompareMode() {
+  compareMode = !compareMode;
+  const btn = document.getElementById('compareToggleBtn');
+  if (compareMode) { btn.classList.add('active'); btn.textContent = '☑ 비교하기'; }
+  else { btn.classList.remove('active'); btn.textContent = '☐ 비교하기'; selectedOrgs.clear(); updateFab(); }
+  const input = document.getElementById('searchInput');
+  if (input.value.trim()) renderOrgList(input.value);
+  else if (showingAllOrgs) showAllOrgList();
 }
 
 function showAllOrgList() {
@@ -719,7 +749,7 @@ function showAllOrgList() {
     <div class="org-card" id="card-${org.id}">
       <div class="org-header">
         <div class="org-header-left">
-          <div class="org-checkbox ${checked ? 'checked' : ''}" onclick="event.stopPropagation();toggleSelect('${org.id}')"></div>
+          ${compareMode ? `<div class="org-checkbox ${checked ? 'checked' : ''}" onclick="event.stopPropagation();toggleSelect('${org.id}')"></div>` : ''}
           <div class="org-name-wrap" onclick="showDetail('${org.id}')">
             <div class="org-name">${org.name}</div>
             <div class="org-type-badge">${getDonTypeBadge(org.donation_type)}</div>
@@ -780,7 +810,7 @@ function renderFunnel() {
         <div class="funnel-chips">
           ${targets.map(t => `<div class="funnel-chip ${funnelState.targets.includes(t)?'selected':''}" onclick="funnelToggle('targets','${t}')">${t}</div>`).join('')}
         </div>
-        <button class="funnel-next" ${funnelState.targets.length===0?'disabled':''} onclick="funnelNext()">다음</button>
+        <div class="funnel-nav"><button class="funnel-prev" onclick="funnelPrev()">이전</button><button class="funnel-next" ${funnelState.targets.length===0?'disabled':''} onclick="funnelNext()">다음</button></div>
       </div>`;
   } else if (funnelState.step === 3) {
     const pool = DATA.orgs.filter(o => funnelMatchRegions(o) && funnelMatchTargets(o));
@@ -794,7 +824,7 @@ function renderFunnel() {
         <div class="funnel-options">
           ${causes.map(c => `<div class="funnel-option ${funnelState.causes.includes(c)?'selected':''}" onclick="funnelToggle('causes','${c}')">${c}</div>`).join('')}
         </div>
-        <button class="funnel-next" ${funnelState.causes.length===0?'disabled':''} onclick="funnelNext()">다음</button>
+        <div class="funnel-nav"><button class="funnel-prev" onclick="funnelPrev()">이전</button><button class="funnel-next" ${funnelState.causes.length===0?'disabled':''} onclick="funnelNext()">다음</button></div>
       </div>`;
   } else if (funnelState.step === 4) {
     container.innerHTML = `
@@ -804,7 +834,7 @@ function renderFunnel() {
         <div class="funnel-options">
           ${BUDGET_OPTIONS.map((b,i) => `<div class="funnel-option ${funnelState.budget===i?'selected':''}" onclick="funnelPickBudget(${i})">${b.label}</div>`).join('')}
         </div>
-        <button class="funnel-next" ${funnelState.budget===null?'disabled':''} onclick="funnelNext()">결과 보기</button>
+        <div class="funnel-nav"><button class="funnel-prev" onclick="funnelPrev()">이전</button><button class="funnel-next" ${funnelState.budget===null?'disabled':''} onclick="funnelNext()">결과 보기</button></div>
       </div>`;
   } else {
     renderFunnelResults();
@@ -827,6 +857,10 @@ function funnelPickBudget(idx) {
 function funnelNext() {
   funnelState.step++;
   renderFunnel();
+}
+
+function funnelPrev() {
+  if (funnelState.step > 1) { funnelState.step--; renderFunnel(); }
 }
 
 function funnelMatchRegions(org) {
@@ -1414,10 +1448,6 @@ function showCompare() {
 
     <div class="compare-actions">
       <button class="btn-outline" onclick="goBack()">&#8592; 목록으로</button>
-      <div style="display:flex;flex:1;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(224,122,95,0.3);">
-        <button style="flex:1;border:none;background:linear-gradient(135deg,var(--coral),#D4694E);color:#fff;padding:12px;font-size:0.82rem;font-weight:700;cursor:default;">비교하기 (${orgs.length})</button>
-        <button style="border:none;background:#D4694E;color:rgba(255,255,255,0.9);padding:12px 16px;font-size:0.9rem;font-weight:700;cursor:pointer;border-left:1px solid rgba(255,255,255,0.2);" onclick="clearAllSelections();goBack()">✕</button>
-      </div>
     </div>
   `;
 
