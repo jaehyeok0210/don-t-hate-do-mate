@@ -3164,7 +3164,7 @@ const DATA = {
       "recurring_min": 10000,
       "onetime_min": 10000,
       "onetime_available": true,
-      "donation_url": "https://kclc.or.kr",
+      "donation_url": "https://childhoodcancer.or.kr/",
       "programs": [
         {
           "name": "치료비 지원사업",
