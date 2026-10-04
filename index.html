@@ -1120,12 +1120,12 @@ function showDetail(id) {
           </div>
         </div>
         <div style="margin-bottom:6px;">
-          <div onclick="this.nextElementSibling.classList.toggle('detail-open');this.querySelector('.toggle-arrow').classList.toggle('arrow-open')" style="font-size:0.75rem;font-weight:700;color:var(--sage);padding:6px 0;display:flex;align-items:center;gap:4px;cursor:pointer;user-select:none;">
-            <div style="width:6px;height:6px;border-radius:1px;background:var(--sage);"></div>
+          <div onclick="this.nextElementSibling.classList.toggle('detail-open');this.querySelector('.toggle-arrow').classList.toggle('arrow-open')" style="font-size:0.75rem;font-weight:700;color:var(--sand);padding:6px 0;display:flex;align-items:center;gap:4px;cursor:pointer;user-select:none;">
+            <div style="width:6px;height:6px;border-radius:1px;background:var(--sand);"></div>
             운영비 세부 · ${fmtEok(latestFY.expense_admin || latestFY.expense_total * ratios['운영비'])}
             <span class="toggle-arrow" style="margin-left:auto;font-size:0.6rem;">▶</span>
           </div>
-          <div class="detail-panel" style="padding-left:10px;border-left:2px solid #D4EDDA;">
+          <div class="detail-panel" style="padding-left:10px;border-left:2px solid #F5E6C8;">
             ${expDetail && expDetail.admin ? expDetail.admin.map(it => `
               <div style="display:flex;justify-content:space-between;padding:3px 0;font-size:0.75rem;">
                 <span style="color:var(--stone);">${it.name}</span>
@@ -1135,12 +1135,12 @@ function showDetail(id) {
           </div>
         </div>
         <div>
-          <div onclick="this.nextElementSibling.classList.toggle('detail-open');this.querySelector('.toggle-arrow').classList.toggle('arrow-open')" style="font-size:0.75rem;font-weight:700;color:#C09340;padding:6px 0;display:flex;align-items:center;gap:4px;cursor:pointer;user-select:none;">
-            <div style="width:6px;height:6px;border-radius:1px;background:var(--sand);"></div>
+          <div onclick="this.nextElementSibling.classList.toggle('detail-open');this.querySelector('.toggle-arrow').classList.toggle('arrow-open')" style="font-size:0.75rem;font-weight:700;color:var(--sage);padding:6px 0;display:flex;align-items:center;gap:4px;cursor:pointer;user-select:none;">
+            <div style="width:6px;height:6px;border-radius:1px;background:var(--sage);"></div>
             모금비 세부 · ${fmtEok(latestFY.expense_fundraising || latestFY.expense_total * ratios['모금비'])}
             <span class="toggle-arrow" style="margin-left:auto;font-size:0.6rem;">▶</span>
           </div>
-          <div class="detail-panel" style="padding-left:10px;border-left:2px solid #FEF3C7;">
+          <div class="detail-panel" style="padding-left:10px;border-left:2px solid #C8E6D0;">
             ${expDetail && expDetail.fundraising ? expDetail.fundraising.map(it => `
               <div style="display:flex;justify-content:space-between;padding:3px 0;font-size:0.75rem;">
                 <span style="color:var(--stone);">${it.name}</span>
