@@ -311,15 +311,6 @@ input, select, button { font-family: inherit; }
 .donut-container { display:flex; align-items:center; gap:16px; margin:12px 0; }
 .donut-svg { width:100px; height:100px; flex-shrink:0; }
 .donut-legend { font-size:0.75rem; }
-.ratio-trend-wrap { display:flex; gap:12px; margin:14px 0 4px; }
-.ratio-trend-wrap .donut-container { margin:0; flex-shrink:0; }
-.ratio-year-table { flex:1; min-width:0; }
-.ratio-year-table table { width:100%; border-collapse:collapse; font-size:0.7rem; }
-.ratio-year-table th { color:var(--stone); font-weight:600; padding:4px 4px; text-align:center; border-bottom:1.5px solid #E8E0D8; }
-.ratio-year-table td { padding:5px 4px; text-align:center; font-variant-numeric:tabular-nums; }
-.ratio-year-table tr:not(:last-child) td { border-bottom:1px solid #F0E6DC; }
-.ratio-year-table .row-label { text-align:left; color:var(--stone); font-weight:500; white-space:nowrap; }
-.ratio-year-table .row-label .ldot { display:inline-block; width:7px; height:7px; border-radius:2px; margin-right:4px; vertical-align:middle; }
 .legend-item { display:flex; align-items:center; gap:6px; margin-bottom:5px; }
 .legend-dot { width:8px; height:8px; border-radius:2px; flex-shrink:0; }
 .d-metric { display:flex; justify-content:space-between; align-items:baseline; padding:7px 0; border-bottom:1px solid #F0E6DC; }
@@ -1101,35 +1092,15 @@ function showDetail(id) {
       <div style="font-size:0.75rem;color:var(--stone);padding:4px 0 8px;">
         사업비 ${fmt(perTenK_sa)}원 / 운영비 ${fmt(perTenK_un)}원 / 모금비 ${fmt(perTenK_mo)}원
       </div>
-      <div class="ratio-trend-wrap">
-        <div class="donut-container">
-          ${donutSvg}
-          <div class="donut-legend">
-            ${donutData.map(d => `
-              <div class="legend-item">
-                <div class="legend-dot" style="background:${d.color}"></div>
-                <span>${d.label} ${(d.pct*100).toFixed(1)}%</span>
-              </div>`).join('')}
-          </div>
+      <div class="donut-container">
+        ${donutSvg}
+        <div class="donut-legend">
+          ${donutData.map(d => `
+            <div class="legend-item">
+              <div class="legend-dot" style="background:${d.color}"></div>
+              <span>${d.label} ${(d.pct*100).toFixed(1)}%</span>
+            </div>`).join('')}
         </div>
-        ${(() => {
-          const yrs = Object.keys(org.fiscal_years).sort().reverse().slice(0, 3);
-          const rows = yrs.map(y => {
-            const fy = org.fiscal_years[y];
-            if (!fy || !fy.expense_breakdown_ui) return null;
-            const r = getExpenseRatios(fy);
-            return { y, sa: r['사업비'], un: r['운영비'], mo: r['모금비'] };
-          }).filter(Boolean);
-          if (rows.length < 2) return '';
-          return `<div class="ratio-year-table"><table>
-            <thead><tr><th></th>${rows.map(r => '<th>' + r.y + '</th>').join('')}</tr></thead>
-            <tbody>
-              <tr><td class="row-label"><span class="ldot" style="background:#E07A5F"></span>사업비</td>${rows.map(r => '<td style="font-weight:700;color:#E07A5F">' + (r.sa*100).toFixed(1) + '%</td>').join('')}</tr>
-              <tr><td class="row-label"><span class="ldot" style="background:#F2CC8F"></span>운영비</td>${rows.map(r => '<td>' + (r.un*100).toFixed(1) + '%</td>').join('')}</tr>
-              <tr><td class="row-label"><span class="ldot" style="background:#81B29A"></span>모금비</td>${rows.map(r => '<td>' + (r.mo*100).toFixed(1) + '%</td>').join('')}</tr>
-            </tbody>
-          </table></div>`;
-        })()}
       </div>
       <!-- 비용 세부항목 (토글) -->
       <div style="margin-top:12px;">
