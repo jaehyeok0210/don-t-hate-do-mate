@@ -1161,7 +1161,7 @@ function showDetail(id) {
         if (rows.length < 2) return '';
         return `<div style="margin-top:16px;">
           <div style="font-size:0.78rem;font-weight:700;color:var(--charcoal);margin-bottom:8px;">연도별 비율 추이</div>
-          ${makeRatioLineChart(rows)}
+          ${makeRatioTable(rows)}
         </div>`;
       })()}
       <div class="context-text">같은 활동도 단체마다 분류 기준이 다를 수 있어 직접 비교에 한계가 있어요.</div>
@@ -1351,54 +1351,26 @@ function makeDonut(data) {
   return `<svg class="donut-svg" viewBox="0 0 100 100">${paths}</svg>`;
 }
 
-function makeRatioLineChart(rows) {
-  const W = 300, H = 150, padL = 38, padR = 44, padT = 20, padB = 28;
-  const cW = W - padL - padR, cH = H - padT - padB;
+function makeRatioTable(rows) {
   const series = [
     { key: 'sa', label: '사업비', color: '#E07A5F' },
     { key: 'un', label: '운영비', color: '#F2CC8F' },
     { key: 'mo', label: '모금비', color: '#81B29A' }
   ];
-  const allVals = rows.flatMap(r => [r.sa, r.un, r.mo]);
-  let yMin = Math.floor(Math.min(...allVals) / 5) * 5;
-  let yMax = Math.ceil(Math.max(...allVals) / 5) * 5;
-  if (yMax - yMin < 10) { yMin = Math.max(0, yMin - 5); yMax = yMax + 5; }
-  const yRange = yMax - yMin || 1;
-  const xStep = rows.length > 1 ? cW / (rows.length - 1) : 0;
-  const toX = i => padL + i * xStep;
-  const toY = v => padT + cH - ((v - yMin) / yRange) * cH;
-
-  let svg = `<svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:${W}px;height:auto;display:block;">`;
-
-  // Grid lines
-  const gridSteps = yMax - yMin <= 20 ? 4 : 5;
-  for (let i = 0; i <= gridSteps; i++) {
-    const val = yMin + (yRange / gridSteps) * i;
-    const y = toY(val);
-    svg += `<line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="#E8E0D8" stroke-width="0.5"/>`;
-    svg += `<text x="${padL - 4}" y="${y + 3}" text-anchor="end" fill="#A09080" font-size="8" font-family="system-ui">${val.toFixed(0)}%</text>`;
-  }
-
-  // X labels
-  rows.forEach((r, i) => {
-    svg += `<text x="${toX(i)}" y="${H - 6}" text-anchor="middle" fill="#A09080" font-size="9" font-family="system-ui">${r.y}</text>`;
+  let html = `<table style="width:100%;border-collapse:collapse;font-size:0.75rem;">
+    <thead><tr>
+      <th style="text-align:left;padding:6px 4px;border-bottom:1.5px solid #E8E0D8;color:var(--stone);font-weight:600;"></th>
+      ${rows.map(r => `<th style="text-align:center;padding:6px 4px;border-bottom:1.5px solid #E8E0D8;color:var(--stone);font-weight:600;">${r.y}</th>`).join('')}
+    </tr></thead><tbody>`;
+  series.forEach((s, si) => {
+    const border = si < series.length - 1 ? 'border-bottom:1px solid #F0E6DC;' : '';
+    html += `<tr>
+      <td style="text-align:left;padding:6px 4px;${border}white-space:nowrap;"><span style="display:inline-block;width:7px;height:7px;border-radius:2px;background:${s.color};margin-right:5px;vertical-align:middle;"></span>${s.label}</td>
+      ${rows.map(r => `<td style="text-align:center;padding:6px 4px;${border}font-variant-numeric:tabular-nums;${s.key === 'sa' ? 'font-weight:700;color:#E07A5F;' : ''}">${r[s.key]}%</td>`).join('')}
+    </tr>`;
   });
-
-  // Lines + dots + end labels
-  series.forEach(s => {
-    const pts = rows.map((r, i) => ({ x: toX(i), y: toY(r[s.key]), v: r[s.key] }));
-    const pathD = pts.map((p, i) => (i === 0 ? 'M' : 'L') + p.x.toFixed(1) + ',' + p.y.toFixed(1)).join(' ');
-    svg += `<path d="${pathD}" fill="none" stroke="${s.color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`;
-    pts.forEach(p => {
-      svg += `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="3.5" fill="#fff" stroke="${s.color}" stroke-width="2"/>`;
-    });
-    // End label
-    const last = pts[pts.length - 1];
-    svg += `<text x="${last.x + 6}" y="${last.y + 3}" fill="${s.color}" font-size="8" font-weight="600" font-family="system-ui">${s.label} ${last.v}%</text>`;
-  });
-
-  svg += '</svg>';
-  return svg;
+  html += '</tbody></table>';
+  return html;
 }
 
 function makeTrendChart(years, revenues, expenses) {
